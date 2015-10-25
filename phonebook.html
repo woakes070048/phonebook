@@ -1,5 +1,7 @@
 <head>
     <title>Contacts</title>
+    <link rel="stylesheet" type="text/css" href="materialize.css">
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style type="text/css">
     	.map-container {
 			  width: 100%;
@@ -9,53 +11,336 @@
     </style>
 </head>
 <body>
-
+	
 </body>
 
+<template name="MainNavbar">
+	<div class="navbar-fixed">
+		<nav class="red">
+			<div class="nav-wrapper">
+				<a href="#!" class="brand-logo">Contacts</a>
+			</div>
+		</nav>
+	</div>
+</template>
+
+<template name="InnerNavbar">
+	<div class="navbar-fixed">
+		<nav class="red">
+			<div class="nav-wrapper">
+				<a href="/home" class="brand-logo">Back</a>
+			</div>
+		</nav>
+	</div>
+</template>
+
+<template name="ViewTemplateNavbar">
+	<div class="navbar-fixed">
+		<nav class="red">
+			<div class="nav-wrapper">
+				<a href="/view/{{_id}}" class="brand-logo">Back</a>
+			</div>
+		</nav>
+	</div>
+</template>
+
 <template name="contacts">
-	 <ul>
-	    {{#each contact}}
-	        <li><a href="/view/{{_id}}">{{> ContactItem}}</a></li>
-	    {{/each}}
-    </ul>
+    {{#each contact}}
+        <a href="/view/{{_id}}" class="contact-card">
+        	<div style="margin-left:40px">
+        		<span style="color:rgb(127, 111, 111);font-size:16px">
+        			{{> ContactItem}}
+        			
+        		</span>
+        	</div>
+        	<hr style="width:85%;border:1px solid rgba(250, 206, 206,0.25)">
+        </a>
+    {{/each}}
 </template>
 
 <template name="ContactItem">
-    <li>{{name}}</li>
+    <p>{{name}}<a href="/delete/{{_id}}"><i class="material-icons delete-icon">delete</i></a></p>
+</template>	
+
+<template name="results">
+	{{> SearchInnerNavbar}}
+    <div class="row">
+    	<div class="col l12 s12">
+    		<a href="/view/{{_id}}" style="color:rgb(84, 84, 84); font-size:17px">
+    		<div class="card" style="height:50px">
+    			<p style="margin-left:20px;margin-top:20px;">{{name}} {{lastname}}</p>
+    		</div>
+    		</a>
+    	</div>
+    </div>
 </template>	
 
 <template name="addContact">
-    <form>
-        <input type="text" placeholder="Type a task here..." name="ContactName">
-    </form>
+
+	<div class="row">
+		<br>
+		<form class="col s12">
+			<div class="row card">
+				<div class="input-field col s12">
+					<input name="ContactName" placeholder="First Name" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input name="LastName" placeholder="Last Name" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input name="email" placeholder="Email" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input name="number" placeholder="Phone Number" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input name="Longitude" placeholder="Longitude" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input name="Latitude" placeholder="Latitude" type="text" class="validate">
+				</div>
+
+				<div class="input-field col s12">
+					<input type="submit" class="btn red" style="margin-left:40%" value="Save">
+				</div> 
+			</div>
+		</form>
+	</div>
 </template>
 
+<template name="search">
+	{{> SearchNavbar}}
+	{{> SearchFooter}}
+	<div class="row">
+		<br>
+		<form class="col s12">
+			<div class="row card">
+				<div class="input-field col s12">
+					<input name="keyword" placeholder="Keyword" type="text" class="validate">
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="searchFirstName">
+	{{> SearchInnerNavbar}}
+	<div class="row">
+		<br>
+		<form class="col s12">
+			<div class="row card">
+				<div class="input-field col s12">
+					<input name="Name" placeholder="First Name" type="text" class="validate">
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="searchLastName">
+	{{> SearchInnerNavbar}}
+	<div class="row">
+		<br>
+		<form class="col s12">
+			<div class="row card">
+				<div class="input-field col s12">
+					<input name="Name" placeholder="Last Name" type="text" class="validate">
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+
 <template name="home">
-	<a href="/newContact">Add Contact</a>
-	<a href="/locater">Locate</a>
-	<a href="#" onclick="window.open('http://www.google.com/maps/@12.9704533,79.1236632,13z', '_system');">www.facebook.com</a>
-    {{> contacts}}
+	{{> MainNavbar}}
+	{{> footer}}
+    <div style="position:relative;top:0px;bottom:50px;width:100%;overflow:auto">
+    	{{> contacts}}
+    </div>
 </template>
 
 <template name="newContact">
+	{{> InnerNavbar}}
 	{{> addContact}}
 </template>
 
 <template name="view">
-	<a href="/edit/{{_id}}">Edit</a>
-	<a href="/delete/{{_id}}" class="delete" >Delete</a>
-	<p>{{name}}</p>
+	{{> InnerNavbar}}
+	{{> ViewTemplateFooter}}
+	<div class="row">
+		<div class="col l12 s12">
+			<div class="card">
+				<br>
+				<div class="row">
+					<div class="col l12 s12">
+						<h6 style="font-size:20px; color:rgb(97, 97, 97)">
+							{{name}}
+						</h6>
+					</div>
+				</div>
+				<hr style="width:85%;border:1px solid rgba(250, 206, 206,0.25)">
+
+				<br>
+				<div class="row">
+					<div class="col l12 s12">
+						<h6 style="font-size:20px; color:rgb(97, 97, 97)">
+							<i class="material-icons" style="margin-left:5%">email</i>
+							{{email}}
+						</h6>
+					</div>
+				</div>
+				<hr style="width:85%;border:1px solid rgba(250, 206, 206,0.25)">
+
+				<br>
+				<div class="row">
+					<div class="col l12 s12">
+						<h6 style="font-size:20px; color:rgb(97, 97, 97)">
+							<i class="material-icons" style="margin-left:5%">call</i>
+							{{number}}
+						</h6>
+					</div>
+				</div>
+				<hr style="width:85%;border:1px solid rgba(250, 206, 206,0.25)">
+
+				<br>
+				<div class="row">
+					<div class="col l12 s12">
+						<h6 style="font-size:20px; color:rgb(97, 97, 97)">
+							<i class="material-icons" style="margin-left:5%">perm_identity</i>
+							{{gender}}
+						</h6>
+					</div>
+				</div>
+				<hr style="width:85%;border:1px solid rgba(250, 206, 206,0.25)">
+
+				<br>
+				<div class="row">
+					<div class="col l12 s12">
+						<h6 style="font-size:20px; color:rgb(97, 97, 97)">
+							<i class="material-icons" style="margin-left:5%">location_on</i>
+							{{lat}} deg,{{long}} deg
+						</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="edit">
-	<form>
-        <input type="text" placeholder="{{name}}" name="ContactName">
-        <input type="hidden" placeholder="{{_id}}" name="ContactID">
-    </form>
+	{{> ViewTemplateNavbar}}
+    <div class="row">
+		<br>
+		<form class="col s12">
+			<div class="row card">
+				<div class="input-field col s12">
+					<input type="text" placeholder="{{name}}" name="ContactName" class="validate">
+       				<input type="hidden" placeholder="{{_id}}" name="ContactID" class="validate">
+				</div>
+			</div>
+		</form>
+	</div>
 </template>
 
 <template name="map">  
   <div class="map-container">
     {{> googleMap name="map" options=mapOptions}}
   </div>
-</template>  
+</template>
+
+<template name="footer">
+	<div class="footer red">
+		<div class="row">
+			<div class="col l6 m6 s6">
+				<p class="footer-option">
+				<a href="/search" class="addbtn">
+					<i class="material-icons" style="margin-left:40%">search</i>
+				</a>
+				</p>
+			</div>
+			<div class="col l6 m6 s6">
+				<p class="footer-option">
+				<a href="/newContact" class="addbtn">
+					<i class="material-icons" style="margin-left:40%">add</i>
+				</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="ViewTemplateFooter">
+	<div class="footer red">
+		<div class="row">
+			<div class="col l6 s6 m6">
+				<a href="#" onclick="window.open('https://www.google.com/maps/@{{long}},{{lat}}', '_system');" style="color:white">
+					<div class="col l12 m12 s12">
+						<p style="margin-left:50%;font-size:17px;">
+							Locate
+						</p>
+					</div>
+				</a>
+			</div>
+			<div class="col l6 s6 m6">
+				<a href="/edit/{{_id}}" style="color:white;">
+					<div class="col l12 m12 s12">
+						<p style="margin-left:50%;font-size:17px;">
+							Edit
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="SearchFooter">
+	<div class="footer red">
+		<div class="row">
+			<div class="col l6 s6 m6">
+				<a href="/searchFirstName" style="color:white;">
+					<div class="col l12 m12 s12">
+						<p style="margin-left:10%;font-size:17px;">
+							Search by First Name
+						</p>
+					</div>
+				</a>
+			</div>
+			<div class="col l6 s6 m6">
+				<a href="/searchLastName" style="color:white;">
+					<div class="col l12 m12 s12">
+						<p style="margin-left:10%;font-size:17px;">
+							Search by First Name
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="SearchNavbar">
+	<div class="navbar-fixed">
+		<nav class="red">
+			<div class="nav-wrapper">
+				<a href="/home" class="brand-logo">Back</a>
+			</div>
+		</nav>
+	</div>
+</template>
+
+<template name="SearchInnerNavbar">
+	<div class="navbar-fixed">
+		<nav class="red">
+			<div class="nav-wrapper">
+				<a href="/search" class="brand-logo">Back</a>
+			</div>
+		</nav>
+	</div>
+</template>

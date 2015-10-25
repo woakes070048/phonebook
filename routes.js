@@ -2,12 +2,51 @@ Router.route('/', {
     template: 'home'
 });
 
+Router.route('/home', {
+    template: 'home'
+});
+
 Router.route('/newContact', {
     template: 'newContact'
 });
 
-Router.route('/locater', {
-    template: 'map'
+Router.route('/results/:ContactName', {
+    template: 'results',
+    data: function(){
+        var name = this.params.ContactName;
+        var results = Contacts.findOne({name:name});
+        return results;
+    }
+});
+
+Router.route('/resulta/:ContactName', {
+    template: 'results',
+    data: function(){
+        var name = this.params.ContactName;
+        var results = Contacts.findOne({name:name});
+        return results;
+    }
+});
+
+Router.route('/resultu/:ContactName', {
+    template: 'results',
+    data: function(){
+        var name = this.params.ContactName;
+        var results = Contacts.findOne({lastname:name});
+        return results;
+    }
+});
+
+Router.route('/search', {
+    template: 'search'
+});
+
+Router.route('/searchFirstName', {
+    template: 'searchFirstName'
+});
+
+Router.route('/searchLastName', {
+    template: 'searchLastName'
 });
 
 Router.route('/view/:_id', {

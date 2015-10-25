@@ -23,16 +23,64 @@ if (Meteor.isClient) {
   });
 
   Template.addContact.events({
-    'submit form': function(event){
+    'click .btn': function(event){
         event.preventDefault();
         var ContactName = $('[name="ContactName"]').val();
+        var Name = $('[name="LastName"]').val();
+        var number = $('[name="number"]').val();
+        var email = $('[name="email"]').val();
+        var long = $('[name="Longitude"]').val();
+        var lat = $('[name="Latitude"]').val();
         Contacts.insert({
             name: ContactName,
+            lastname: Name,
+            number: number,
+            email: email,
+            long: long,
+            lat: lat,
             createdAt: new Date()
         });
         $('[name="ContactName"]').val('');
+        $('[name="LastName"]').val('');
+        $('[name="email"]').val('');
+        $('[name="number"]').val('');
+        $('[name="Longitude"]').val('');
+        $('[name="Latitude"]').val('');
 
         Router.go('/');
+    }
+  });
+
+  Template.search.events({
+    'submit form': function(event){
+        event.preventDefault();
+        var ContactName = $('[name="keyword"]').val();
+      //  var reply = Contacts.find({"name":"Amit"});
+        $('[name="ContactName"]').val('');
+
+        Router.go('/results/'+ContactName);
+    }
+  });
+
+  Template.searchFirstName.events({
+    'submit form': function(event){
+        event.preventDefault();
+        var ContactName = $('[name="Name"]').val();
+      //  var reply = Contacts.find({"name":"Amit"});
+        $('[name="Name"]').val('');
+
+        Router.go('/resulta/'+ContactName);
+    }
+  });
+
+  Template.searchLastName.events({
+    'submit form': function(event){
+        event.preventDefault();
+        var ContactName = $('[name="Name"]').val();
+      //  var reply = Contacts.find({"name":"Amit"});
+        $('[name="Name"]').val('');
+
+        Router.go('/resultu/'+ContactName);
     }
   });
 
